@@ -72,9 +72,9 @@
 	var Channel = (function () {
 	  _createClass(Channel, [{
 	    key: '_dispatchMessage',
-	    value: function _dispatchMessage(e) {
+	    value: function _dispatchMessage(message) {
 	      Array.prototype.forEach.call(this._subscribers, function (cb) {
-	        cb(e);
+	        cb(message);
 	      });
 	    }
 	  }, {
@@ -85,16 +85,16 @@
 	  }, {
 	    key: '_onMessage',
 	    value: function _onMessage(e) {
-	      var message = e.data;
+	      var payload = e.data;
 
 	      // we only want to process the message once, including propagating it to all of our parents and children
-	      if (message.receivedIds.indexOf(this._id) >= 0) {
+	      if (payload.receivedIds.indexOf(this._id) >= 0) {
 	        return;
 	      }
 
-	      message.receivedIds.push(this._id);
-	      this._dispatchMessage(message);
-	      this._propagateMessage(message);
+	      payload.receivedIds.push(this._id);
+	      this._dispatchMessage(payload.message);
+	      this._propagateMessage(payload);
 	    }
 	  }, {
 	    key: '_propagateMessage',
