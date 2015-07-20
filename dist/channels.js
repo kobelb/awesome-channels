@@ -84,13 +84,16 @@
 	    value: function _onMessage(e) {
 	      var payload = e.data;
 
+	      if (payload.namespace !== this._namespace) return;
+
 	      this._dispatchMessage(payload.message);
 	    }
 	  }]);
 
-	  function Channel() {
+	  function Channel(namespace) {
 	    _classCallCheck(this, Channel);
 
+	    this._namespace = namespace;
 	    this._targetOrigin = '*';
 	    this._subscribers = [];
 	    window.addEventListener('message', this._onMessage.bind(this));
@@ -100,6 +103,7 @@
 	    key: 'trigger',
 	    value: function trigger(message) {
 	      var payload = {
+	        namespace: this._namespace,
 	        message: message
 	      };
 

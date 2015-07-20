@@ -12,10 +12,14 @@ class Channel {
   _onMessage (e) {
     let payload = e.data;
 
+    if (payload.namespace !== this._namespace)
+      return;
+
     this._dispatchMessage(payload.message);
   }
 
-  constructor () {
+  constructor (namespace) {
+    this._namespace = namespace;
     this._targetOrigin = '*';
     this._subscribers = [];
     window.addEventListener('message', this._onMessage.bind(this));
@@ -23,6 +27,7 @@ class Channel {
 
   trigger (message) {
     let payload = {
+      namespace: this._namespace,
       message
     };
 

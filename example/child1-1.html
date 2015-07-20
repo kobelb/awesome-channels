@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Child 2</title>
+    <title>Child 1</title>
 </head>
 <body>
+<button onclick="channel.trigger('child 1-1 sent message')">Send Message to Parent</button>
 <!-- page content -->
-<button onclick="channel.trigger('child 2-1 sent message')">Send Message to Parent</button>
 <script src="../dist/channels.js"></script>
 <script>
     var channel = new Channel('dude stuff');
     channel.on(function (e) {
-        console.log('child 2-1 received message ', e);
+        console.log('child 1-1 received message ', e);
     });
 </script>
 </body>
