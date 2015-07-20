@@ -18,5 +18,8 @@
     "expose-loader": "^0.7.0",
     "node-libs-browser": "^0.5.2",
     "webpack": "^1.10.1"
+  },
+  "dependencies": {
+    "uuid": "^2.0.1"
   }
 }

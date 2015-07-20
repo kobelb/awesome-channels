@@ -5,14 +5,18 @@
     <title>Child 1</title>
 </head>
 <body>
-<button onclick="channel.trigger('child 1 sent message')">Send Message to Parent</button>
+<button onclick="channel.emit('message', 'child 1 sent message')">Send Message to Parent</button>
 <!-- page content -->
 <iframe src="child1-1.html"></iframe>
 <script src="../dist/channels.js"></script>
 <script>
     var channel = new Channel();
-    channel.on(function (e) {
+    channel.on('message', function (e) {
         console.log('child 1 received message ', e);
+    });
+
+    channel.register('sup', function (name) {
+        return 'not much ' + name;
     });
 </script>
 </body>

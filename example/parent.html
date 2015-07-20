@@ -7,11 +7,12 @@
 <body>
 <iframe src="child1.html"></iframe>
 <iframe src="child2.html"></iframe>
-<button onclick="channel.trigger('parent sent message')">Send Message</button>
+<button onclick="channel.emit('message', 'parent sent message')">Send Message</button>
+<button onclick="channel.call('sup', function (response) { alert(response);}, 'dude')">Sup?</button>
 <script src="../dist/channels.js"></script>
 <script>
     var channel = new Channel();
-    channel.on(function (e) {
+    channel.on('message', function (e) {
         console.log('parent received message', e);
     });
 </script>

@@ -6,12 +6,12 @@
 </head>
 <body>
 <!-- page content -->
-<button onclick="channel.trigger('child 2 sent message')">Send Message to Parent</button>
+<button onclick="channel.emit('message', 'child 2 sent message')">Send Message to Parent</button>
 <iframe src="child2-1.html"></iframe>
 <script src="../dist/channels.js"></script>
 <script>
     var channel = new Channel();
-    channel.on(function (e) {
+    channel.on('message', function (e) {
         console.log('child 2 received message ', e);
     });
 </script>
