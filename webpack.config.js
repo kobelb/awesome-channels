@@ -1,11 +1,15 @@
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./src/Channel.js",
     module: {
         loaders: [
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel'
+            },
+            {
+                test: require.resolve('./src/Channel'),
+                loader: 'expose?Channel!babel'
             }
         ]
     },

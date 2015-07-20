@@ -6,10 +6,11 @@
 </head>
 <body>
 <!-- page content -->
-<button onclick="trigger('child 2 sent message')">Send Message to Parent</button>
-<script src="../channel.js"></script>
+<button onclick="channel.trigger('child 2 sent message')">Send Message to Parent</button>
+<script src="../dist/channels.js"></script>
 <script>
-    window.addEventListener('message', function (e) {
+    var channel = new Channel();
+    channel.on(function (e) {
         console.log('child 2 received message ', e);
     });
 </script>
