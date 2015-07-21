@@ -44,13 +44,31 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+	'use strict';
 
-	module.exports = global["Channel"] = __webpack_require__(1);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _Channel = __webpack_require__(1);
+
+	var _Channel2 = _interopRequireDefault(_Channel);
+
+	exports.Channel = _Channel2['default'];
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+
+	module.exports = global["Channel"] = __webpack_require__(2);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67,19 +85,19 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _uuid = __webpack_require__(2);
+	var _uuid = __webpack_require__(3);
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
-	var _propagator = __webpack_require__(4);
+	var _propagator = __webpack_require__(5);
 
 	var _propagator2 = _interopRequireDefault(_propagator);
 
 	_propagator2['default'].initialize();
 
-	var MESSAGE_TYPE = 'js-channels:message';
-	var METHOD_CALL_TYPE = 'js-channels:method:call';
-	var METHOD_RESPONSE_TYPE = 'js-channels:method:response';
+	var MESSAGE_TYPE = 'channels:message';
+	var METHOD_CALL_TYPE = 'channels:method:call';
+	var METHOD_RESPONSE_TYPE = 'channels:method:response';
 
 	var Channel = (function () {
 	  _createClass(Channel, [{
@@ -228,7 +246,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//     uuid.js
@@ -239,7 +257,7 @@
 	// Unique ID creation requires a high quality random # generator.  We feature
 	// detect to determine the best RNG source, normalizing to a function that
 	// returns 128-bits of randomness, since that's what's usually required
-	var _rng = __webpack_require__(3);
+	var _rng = __webpack_require__(4);
 
 	// Maps for number <-> hex string conversion
 	var _byteToHex = [];
@@ -417,7 +435,7 @@
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -455,7 +473,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';

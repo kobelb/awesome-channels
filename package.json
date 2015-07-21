@@ -1,8 +1,8 @@
 {
-  "name": "js-channels",
+  "name": "channels",
   "version": "0.0.1",
   "description": "Messaging channels over window.postMessage",
-  "main": "src/index.js",
+  "main": "dist/channels.js",
   "directories": {
     "example": "example"
   },

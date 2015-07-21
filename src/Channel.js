@@ -2,9 +2,9 @@ import uuid from 'uuid';
 import propagator from './propagator';
 propagator.initialize();
 
-const MESSAGE_TYPE = 'js-channels:message';
-const METHOD_CALL_TYPE = 'js-channels:method:call';
-const METHOD_RESPONSE_TYPE = 'js-channels:method:response';
+const MESSAGE_TYPE = 'channels:message';
+const METHOD_CALL_TYPE = 'channels:method:call';
+const METHOD_RESPONSE_TYPE = 'channels:method:response';
 
 class Channel {
 

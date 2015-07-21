@@ -1,5 +1,5 @@
 module.exports = {
-    entry: "./src/Channel.js",
+    entry: "./src/index.js",
     module: {
         loaders: [
             {
