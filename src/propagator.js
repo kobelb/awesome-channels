@@ -50,6 +50,10 @@ class Propagator {
 
 export default {
   initialize () {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     if (!window.propagator) {
       window.propagator = new Propagator();
     }

@@ -547,6 +547,10 @@
 
 	exports['default'] = {
 	  initialize: function initialize() {
+	    if (typeof window === 'undefined') {
+	      return;
+	    }
+
 	    if (!window.propagator) {
 	      window.propagator = new Propagator();
 	    }
