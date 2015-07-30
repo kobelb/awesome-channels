@@ -74,6 +74,11 @@ class Channel {
   }
 
   constructor (namespace) {
+    // if the following occurs, we're running on the server and communication on the server isn't supported
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     this._namespace = namespace;
     this._targetOrigin = '*';
     this._subscribers = {};
