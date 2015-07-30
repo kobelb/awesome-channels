@@ -26,7 +26,6 @@ export default function (callback) {
       messageIds.pop();
     }
 
-    console.log(messageIds);
     callback(e);
   }
 }

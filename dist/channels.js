@@ -498,7 +498,7 @@
 	var _uuid2 = _interopRequireDefault(_uuid);
 
 	exports['default'] = function (callback) {
-	  var maxLength = 2;
+	  var maxLength = 100;
 
 	  var messageIds = [];
 
@@ -523,7 +523,6 @@
 	      messageIds.pop();
 	    }
 
-	    console.log(messageIds);
 	    callback(e);
 	  };
 	};
