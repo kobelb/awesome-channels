@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import processMessageOnce from './processMessageOnce';
 import propagator from './propagator';
 propagator.initialize();
 
@@ -84,7 +85,7 @@ class Channel {
     this._subscribers = {};
     this._methodCallbacks = {};
     this._methods = {};
-    window.addEventListener('message', this._onWindowMessage.bind(this));
+    window.addEventListener('message', processMessageOnce(this._onWindowMessage.bind(this)));
   }
 
   call (methodName, cb, ...args) {

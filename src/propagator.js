@@ -1,7 +1,9 @@
+import processMessageOnce from './processMessageOnce';
+
 class Propagator {
   constructor () {
     this._targetOrigin = '*';
-    window.addEventListener('message', this.onMessage.bind(this))
+    window.addEventListener('message', processMessageOnce(this.onMessage.bind(this)));
   }
 
   onMessage (e) {
@@ -13,32 +15,16 @@ class Propagator {
       return;
     }
 
-    // if this is the first time the propagator has seen the message
-    // then we initialize the receivedLocations
-    if (payload.receivedLocations == null) {
-      payload.receivedLocations = [window.location.href];
-    }
-
-    let hasntReceivedMessage = function (w) {
-      return payload.receivedLocations.indexOf(w.location.href) === -1;
-    };
-
     let propagators = [];
-    let willReceiveMessage = function (w) {
-      payload.receivedLocations.push(w.location.href);
-      propagators.push(w);
-    };
 
     // check downstream
     Array.prototype.forEach.call(document.querySelectorAll('iframe'), function (iframe) {
-      if (hasntReceivedMessage(iframe.contentWindow)) {
-        willReceiveMessage(iframe.contentWindow);
-      }
+      propagators.push(iframe.contentWindow);
     });
 
     // check upstream
-    if (hasntReceivedMessage(window.parent)) {
-      willReceiveMessage(window.parent);
+    if (window.parent) {
+      propagators.push(window.parent);
     }
 
     //propagate

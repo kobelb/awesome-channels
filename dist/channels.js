@@ -89,7 +89,11 @@
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
-	var _propagator = __webpack_require__(5);
+	var _processMessageOnce = __webpack_require__(5);
+
+	var _processMessageOnce2 = _interopRequireDefault(_processMessageOnce);
+
+	var _propagator = __webpack_require__(6);
 
 	var _propagator2 = _interopRequireDefault(_propagator);
 
@@ -191,7 +195,7 @@
 	    this._subscribers = {};
 	    this._methodCallbacks = {};
 	    this._methods = {};
-	    window.addEventListener('message', this._onWindowMessage.bind(this));
+	    window.addEventListener('message', (0, _processMessageOnce2['default'])(this._onWindowMessage.bind(this)));
 	  }
 
 	  _createClass(Channel, [{
@@ -479,7 +483,56 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _uuid = __webpack_require__(3);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
+
+	exports['default'] = function (callback) {
+	  var maxLength = 2;
+
+	  var messageIds = [];
+
+	  return function (e) {
+	    // if the message isn't an object, we can't do anything because we have to track this
+	    // message to see if we've seen it before
+	    if (typeof e.data !== 'object') {
+	      return;
+	    }
+
+	    if (!e.data.id) {
+	      e.data.id = _uuid2['default'].v4();
+	    }
+
+	    if (messageIds.indexOf(e.data.id) > -1) {
+	      return;
+	    }
+
+	    // only keeping track of a certain number of messages so we don't use up all the memory
+	    messageIds.unshift(e.data.id);
+	    if (messageIds.length > maxLength) {
+	      messageIds.pop();
+	    }
+
+	    console.log(messageIds);
+	    callback(e);
+	  };
+	};
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -489,14 +542,20 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _processMessageOnce = __webpack_require__(5);
+
+	var _processMessageOnce2 = _interopRequireDefault(_processMessageOnce);
 
 	var Propagator = (function () {
 	  function Propagator() {
 	    _classCallCheck(this, Propagator);
 
 	    this._targetOrigin = '*';
-	    window.addEventListener('message', this.onMessage.bind(this));
+	    window.addEventListener('message', (0, _processMessageOnce2['default'])(this.onMessage.bind(this)));
 	  }
 
 	  _createClass(Propagator, [{
@@ -512,32 +571,16 @@
 	        return;
 	      }
 
-	      // if this is the first time the propagator has seen the message
-	      // then we initialize the receivedLocations
-	      if (payload.receivedLocations == null) {
-	        payload.receivedLocations = [window.location.href];
-	      }
-
-	      var hasntReceivedMessage = function hasntReceivedMessage(w) {
-	        return payload.receivedLocations.indexOf(w.location.href) === -1;
-	      };
-
 	      var propagators = [];
-	      var willReceiveMessage = function willReceiveMessage(w) {
-	        payload.receivedLocations.push(w.location.href);
-	        propagators.push(w);
-	      };
 
 	      // check downstream
 	      Array.prototype.forEach.call(document.querySelectorAll('iframe'), function (iframe) {
-	        if (hasntReceivedMessage(iframe.contentWindow)) {
-	          willReceiveMessage(iframe.contentWindow);
-	        }
+	        propagators.push(iframe.contentWindow);
 	      });
 
 	      // check upstream
-	      if (hasntReceivedMessage(window.parent)) {
-	        willReceiveMessage(window.parent);
+	      if (window.parent) {
+	        propagators.push(window.parent);
 	      }
 
 	      //propagate
