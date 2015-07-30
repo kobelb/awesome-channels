@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 
 export default function (callback) {
-  const maxLength = 100
+  const maxLength = 100;
 
   let messageIds = [];
 
