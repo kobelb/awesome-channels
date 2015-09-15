@@ -46,7 +46,7 @@ class Channel {
 
     methodCallback(response);
 
-    delete methodCallback[instanceId];
+    delete this._methodCallbacks[instanceId];
   }
 
   _onWindowMessage (e) {
@@ -99,6 +99,20 @@ class Channel {
 
     this._methodCallbacks[payload.instanceId] = cb;
     window.postMessage(payload, this._targetOrigin);
+    return payload.instanceId;
+  }
+
+  callWithTimeout (methodName, cb, timeout, ...args) {
+    const instanceId = this.call(methodName, (response) => {
+      cb.apply(null, [true, response]);
+    }, args);
+
+    setTimeout(() => {
+      if (this._methodCallbacks[instanceId]) {
+        delete this._methodCallbacks[instanceId];
+        cb(false);
+      }
+    }, timeout);
   }
 
   emit (eventName, message) {
