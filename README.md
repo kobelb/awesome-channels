@@ -2,21 +2,68 @@
 ##Bower
 Install the package
 
-`bower install git+git@bitbucket.org:collabra/channels.git`
+```
+bower install git+git@bitbucket.org:collabra/channels.git
+```
 
 Add a script tag
 
-`<script src="bower_components/channels/dist/channels.js"></script>`
+```
+#!html
+<script src="bower_components/channels/dist/channels.js"></script>
+```
 
 ##NPM
 Install the package
 
-`npm install git+git@bitbucket.org:collabra/channels.git`
+```
+npm install git+git@bitbucket.org:collabra/channels.git
+```
 
 import/require the library
 
-`import { Channel } from 'channels';`
+```
+#!javascript
+import { Channel } from 'channels';
+```
 
 or
 
-`var Channel = require('channels').Channel;`
+```
+#!javascript
+var Channel = require('channels').Channel;
+```
+
+
+#Usage
+Channels work within a namespace. All publishers/consumers that wish to communicate should be using the same namespace. 
+
+The recommended namespacing is 'project-name:page-name:sub-page-name' ommitting the sub-page-name if not appropriate. For example 'web-application:collaborations:new-recording'.
+
+```
+#!javascript
+var channel = new Channel('web-application:collaborations:new-recording');
+```
+
+
+
+To notify consumers that an event occurred we use the 'emit' method on the instance of the channel
+
+```
+#!javascript
+channel.emit('done', {studentId: 1})
+```
+
+
+
+to be alerted that an event occurred we use subscribe to the event using the 'on' method
+
+
+```
+#!javascript
+
+channel.on('done', function (payload) {
+   console.log(payload);
+   // in this example the console would print '{studentId: 1}'
+});
+```
