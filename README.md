@@ -51,7 +51,7 @@ To notify consumers that an event occurred we use the 'emit' method on the insta
 
 ```
 #!javascript
-channel.emit('done', {studentId: 1})
+channel.emit('done', {studentId: 1});
 ```
 
 
