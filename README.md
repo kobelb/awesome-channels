@@ -10,13 +10,6 @@ import/require the library
 import { Channel } from 'awesome-channels';
 ```
 
-or
-
-```javascript
-var Channel = require('awesome-channels').Channel;
-```
-
-
 # Usage
 Channels work within a namespace. All publishers/consumers that wish to communicate should be using the same namespace. 
 
